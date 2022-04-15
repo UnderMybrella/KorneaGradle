@@ -2,6 +2,25 @@
 
 Plugin for assisting with Kotlin development.
 
+In `settings.gradle.kts`:
+
+```kotlin
+pluginManagement {
+    repositories {
+        maven(url = "https://maven.brella.dev")
+        gradlePluginPortal()
+    }
+}
+```
+
+In `build.gradle.kts`:
+
+```kotlin
+plugins {
+    id("dev.brella.kornea") version "1.0.1"
+}
+```
+
 ### Multiplatform Source Sets
 
 ```kotlin

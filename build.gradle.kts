@@ -1,15 +1,13 @@
-import dev.brella.kornea.gradle.projectFrom
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.20"
     id("maven-publish")
-    id("dev.brella.kornea") version "1.0.0"
     `kotlin-dsl`
 }
 
 group = "dev.brella"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
