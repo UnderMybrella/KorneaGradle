@@ -17,7 +17,7 @@ In `build.gradle.kts`:
 
 ```kotlin
 plugins {
-    id("dev.brella.kornea") version "1.0.1"
+    id("dev.brella.kornea") version "1.0.2"
 }
 ```
 

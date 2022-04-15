@@ -8,10 +8,14 @@ import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 inline fun DependencyHandler.projectFrom(parent: String, module: String) =
     project(":$parent:$parent-$module")
+
+public inline fun KotlinDependencyHandler.projectFrom(parent: String, module: String) =
+    project.dependencies.projectFrom(parent, module)
 
 inline fun Project.defineSourceSet(newName: String, dependsOn: List<String>, noinline includedIn: (String) -> Boolean) =
     project.extensions.getByType<KotlinMultiplatformExtension>()
