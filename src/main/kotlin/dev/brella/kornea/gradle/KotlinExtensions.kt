@@ -15,6 +15,12 @@ public inline fun DependencyHandler.projectFrom(rootName: String?, parent: Strin
 public inline fun DependencyHandler.projectFrom(parent: String, module: String) =
     projectFrom(null, parent, module)
 
+public inline fun KotlinDependencyHandler.projectFrom(rootName: String?, parent: String, module: String) =
+    project.dependencies.projectFrom(rootName, parent, module)
+
+public inline fun KotlinDependencyHandler.projectFrom(parent: String, module: String) =
+    project.dependencies.projectFrom(parent, module)
+
 inline fun Project.defineSourceSet(newName: String, dependsOn: List<String>, noinline includedIn: (String) -> Boolean) =
     project.extensions.getByType<KotlinMultiplatformExtension>()
         .defineSourceSet(newName, dependsOn, includedIn)
