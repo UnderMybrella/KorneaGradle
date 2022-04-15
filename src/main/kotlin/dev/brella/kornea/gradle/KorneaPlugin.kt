@@ -2,6 +2,7 @@ package dev.brella.kornea.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.create
 
 class KorneaPlugin: Plugin<Project> {

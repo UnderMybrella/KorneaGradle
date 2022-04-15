@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "dev.brella"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     mavenCentral()
@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20")
+    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20")
 }
 
 tasks.test {
@@ -25,6 +25,10 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += "-Xcontext-receivers"
+    }
 }
 
 gradlePlugin {
