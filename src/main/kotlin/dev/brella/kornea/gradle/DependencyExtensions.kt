@@ -2,6 +2,7 @@ package dev.brella.kornea.gradle
 
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.api.plugins.ExtraPropertiesExtension
@@ -86,7 +87,7 @@ public inline fun Project.versioned(
     spec: String,
     module: String,
     defaultVersion: String? = null,
-): Dependency {
+): ModuleDependency {
     val version = getExtraOrNull("${module}_VERSION") ?: defaultVersion
 
     return if (version == null) {
@@ -101,14 +102,14 @@ public inline fun Project.versioned(
         } else {
             dependencies.create("$spec:$module:$version")
         }
-    }
+    } as ModuleDependency
 }
 
 public inline fun KotlinDependencyHandler.versioned(
     spec: String,
     module: String,
     defaultVersion: String? = null,
-): Dependency = project.versioned(spec, module, defaultVersion)
+): ModuleDependency = project.versioned(spec, module, defaultVersion)
 
 
 /**
