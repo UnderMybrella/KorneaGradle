@@ -24,6 +24,9 @@ public const val KORNEA_IO_MODULE_NAME: String = "kornea-io"
 public const val KORNEA_MODELLING_MODULE_NAME: String = "kornea-modelling"
 public const val KORNEA_TOOLKIT_MODULE_NAME: String = "kornea-toolkit"
 
+public inline fun Project.getExtraOrNull(key: String): Any? =
+    (if (extra.has(key)) extra[key] else null) ?: if (rootProject.extra.has(key)) rootProject.extra[key] else null
+
 public inline fun ExtensionAware.define(name: String, value: Any?) = extra.set(name, value)
 public inline fun ExtensionAware.define(vararg pairs: Pair<String, Any?>) = pairs.forEach { (k, v) -> extra.set(k, v) }
 
@@ -82,7 +85,7 @@ public inline fun Project.versioned(
     module: String,
     defaultVersion: String? = null,
 ): Dependency {
-    val version = extra.get("${module}_VERSION") ?: rootProject.extra.get("${module}_VERSION") ?: defaultVersion
+    val version = getExtraOrNull("${module}_VERSION") ?:  defaultVersion
 
     return if (version == null) {
         if (spec.contains(':')) {
