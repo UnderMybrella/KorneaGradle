@@ -43,6 +43,7 @@ tasks.withType<KotlinCompile> {
 pluginBundle {
     website = "https://github.com/UnderMybrella/kornea-gradle"
     vcsUrl = "https://github.com/UnderMybrella/kornea-gradle"
+    description = "Plugin for assisting with Kotlin development, especially dealing with Multi-Platform and Multi-Module projects."
 
     tags = listOf("kotlin", "kornea")
 }
