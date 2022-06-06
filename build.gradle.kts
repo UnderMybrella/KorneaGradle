@@ -1,15 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.gradle.kotlin.kotlin-dsl") version "2.3.3"
+//    id("org.gradle.kotlin.kotlin-dsl") version "2.3.3"
 
-    kotlin("jvm") version "1.6.21"
-    id("org.jetbrains.dokka") version "1.6.21"
+    kotlin("jvm") version "1.5.31"
+    id("org.jetbrains.dokka") version "1.5.31"
     id("com.gradle.plugin-publish") version "1.0.0-rc-2"
 }
 
 group = "dev.brella"
-version = "1.1.1"
+version = "1.1.2"
 
 repositories {
     mavenCentral()
@@ -36,7 +36,7 @@ tasks.test {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
-        freeCompilerArgs += listOf("-Xcontext-receivers")
+//        freeCompilerArgs += listOf("-Xcontext-receivers")
     }
 }
 
