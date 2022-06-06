@@ -10,6 +10,9 @@ import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.project
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 
+
+//TODO: Re-Enable when building doesn't break
+/*
 context(Project)
 public inline fun DependencyHandler.versioned(
     spec: String,
@@ -97,4 +100,4 @@ public inline fun DependencyHandler.korneaModelling(defaultVersion: String? = nu
 
 context(Project)
 public inline fun DependencyHandler.korneaToolkit(defaultVersion: String? = null) =
-    korneaModule("toolkit", defaultVersion = defaultVersion)
+    korneaModule("toolkit", defaultVersion = defaultVersion)*/
