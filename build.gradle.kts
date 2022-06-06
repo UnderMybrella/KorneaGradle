@@ -6,10 +6,11 @@ plugins {
     kotlin("jvm") version "1.5.31"
     id("org.jetbrains.dokka") version "1.5.31"
     id("com.gradle.plugin-publish") version "1.0.0-rc-2"
+    `kotlin-dsl`
 }
 
 group = "dev.brella"
-version = "1.1.2"
+version = "1.1.3"
 
 repositories {
     mavenCentral()
