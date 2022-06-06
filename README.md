@@ -1,25 +1,18 @@
 ## Kornea Gradle plugin
 
-Plugin for assisting with Kotlin development.
+Plugin for assisting with Kotlin development, especially dealing with Multi-Platform and Multi-Module projects.
 
-In `settings.gradle.kts`:
-
-```kotlin
-pluginManagement {
-    repositories {
-        maven(url = "https://maven.brella.dev")
-        gradlePluginPortal()
-    }
-}
-```
+### Setting Up
 
 In `build.gradle.kts`:
 
 ```kotlin
 plugins {
-    id("dev.brella.kornea") version "1.0.2"
+    id("dev.brella.kornea") version "1.1.0"
 }
 ```
+
+## Features
 
 ### Multiplatform Source Sets
 
@@ -66,3 +59,34 @@ In `build.gradle.kts` for clients:
 implementation(projectFrom("analysis", "api"))
 implementation(projectFrom("analysis", "spotify"))
 ```
+
+### Dependency Management
+
+kornea-gradle provides a way to store version information, and then access it later when we're defining dependencies.
+
+To define versions: 
+`build.gradle.kts`
+```kotlin
+defineVersion("ktor", "2.0.0")
+defineVersions("ktor" to "2.0.0")
+defineVersions {
+    ktor("2.0.0")
+    version("ktor", "2.0.0")
+    "ktor" .. "2.0.0"
+}
+```
+
+To define a dependency:
+`build.gradle.kts`
+```kotlin
+dependencies {
+    //When calling versioned, we pass the spec, then the module name
+    implementation(versioned("io.ktor:ktor-core", "ktor"))
+    
+    //When we call ktorModule, it constructs a spec from `io.ktor:ktor-$module`
+    api(ktorModule("core"))
+}
+```
+
+Version information will be checked locally, then if it does not exist the root project will be queried. 
+This allows, in multi-module projects, a higher level of dependency coordination.

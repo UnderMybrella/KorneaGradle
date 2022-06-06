@@ -4,6 +4,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.api.plugins.ExtraPropertiesExtension
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.project
@@ -30,11 +31,11 @@ public inline fun ExtensionAware.defineVersion(module: String, version: Any?) = 
 public inline fun ExtensionAware.defineVersions(vararg pairs: Pair<String, Any?>) =
     pairs.forEach { (module, version) -> extra.set("${module}_VERSION", version) }
 public inline fun ExtensionAware.defineVersions(block: VersionDefiner.() -> Unit) =
-    VersionDefiner(this).block()
+    VersionDefiner(extra).block()
 
-class VersionDefiner(val backing: ExtensionAware) {
+class VersionDefiner(val backing: ExtraPropertiesExtension) {
     public inline fun version(module: String, version: Any?) =
-        backing.extra.set(module, version)
+        backing.set(module, version)
 
     public inline fun ktor(version: Any?) =
         version(KTOR_MODULE_NAME, version)
@@ -57,7 +58,7 @@ class VersionDefiner(val backing: ExtensionAware) {
     public inline fun korneaConfig(version: Any?) =
         version(KORNEA_CONFIG_MODULE_NAME, version)
 
-    public inline fun korneaError(version: Any?) =
+    public inline fun korneaErrors(version: Any?) =
         version(KORNEA_ERRORS_MODULE_NAME, version)
 
     public inline fun korneaImg(version: Any?) =
@@ -81,7 +82,7 @@ public inline fun Project.versioned(
     module: String,
     defaultVersion: String? = null,
 ): Dependency {
-    val version = rootProject.extra.get("${module}_VERSION") ?: defaultVersion
+    val version = extra.get("${module}_VERSION") ?: rootProject.extra.get("${module}_VERSION") ?: defaultVersion
 
     return if (version == null) {
         if (spec.contains(':')) {
@@ -105,15 +106,18 @@ public inline fun KotlinDependencyHandler.versioned(
 ): Dependency = project.versioned(spec, module, defaultVersion)
 
 
+/**
+ * Creates a dependency on a ktor module with the specification `io.ktor:ktor-[module]`
+ */
 public inline fun Project.ktorModule(module: String, defaultVersion: String? = null) =
-    versioned("io.ktor:$module", KTOR_MODULE_NAME, defaultVersion)
+    versioned("io.ktor:ktor-$module", KTOR_MODULE_NAME, defaultVersion)
 
 public inline fun Project.kotlinxModule(module: String, versionKey: String, defaultVersion: String? = null) =
     versioned("org.jetbrains.kotlinx:$module", versionKey)
 public inline fun Project.kotlinxCoroutinesModule(module: String, defaultVersion: String? = null) =
-    kotlinxModule(module, KOTLINX_SERIALISATION_MODULE_NAME, defaultVersion)
+    kotlinxModule("kotlinx-coroutines-$module", KOTLINX_COROUTINES_MODULE_NAME, defaultVersion)
 public inline fun Project.kotlinxSerialisationModule(module: String, defaultVersion: String? = null) =
-    kotlinxModule(module, KOTLINX_SERIALISATION_MODULE_NAME, defaultVersion)
+    kotlinxModule("kotlinx-serialization-$module", KOTLINX_SERIALISATION_MODULE_NAME, defaultVersion)
 
 public inline fun Project.brellaModule(module: String, versionKey: String, defaultVersion: String? = null) =
     versioned("dev.brella:$module", versionKey, defaultVersion)
