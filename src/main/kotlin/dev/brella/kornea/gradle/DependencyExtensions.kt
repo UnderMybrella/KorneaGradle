@@ -162,54 +162,54 @@ public inline fun Project.korneaToolkitModule(defaultVersion: String? = null) =
 
 
 public inline fun KotlinDependencyHandler.ktorModule(module: String, defaultVersion: String? = null) =
-    versioned("io.ktor:$module", KTOR_MODULE_NAME, defaultVersion)
+    project.ktorModule(module, defaultVersion)
 
 public inline fun KotlinDependencyHandler.kotlinxModule(
     module: String,
     versionKey: String,
     defaultVersion: String? = null,
 ) =
-    versioned("org.jetbrains.kotlinx:$module", versionKey)
+    project.kotlinxModule(module, versionKey, defaultVersion)
 
 public inline fun KotlinDependencyHandler.kotlinxCoroutinesModule(module: String, defaultVersion: String? = null) =
-    kotlinxModule(module, KOTLINX_SERIALISATION_MODULE_NAME, defaultVersion)
+    project.kotlinxCoroutinesModule(module, defaultVersion)
 
 public inline fun KotlinDependencyHandler.kotlinxSerialisationModule(module: String, defaultVersion: String? = null) =
-    kotlinxModule(module, KOTLINX_SERIALISATION_MODULE_NAME, defaultVersion)
+    project.kotlinxSerialisationModule(module, defaultVersion)
 
 public inline fun KotlinDependencyHandler.brellaModule(
     module: String,
     versionKey: String,
     defaultVersion: String? = null,
 ) =
-    versioned("dev.brella:$module", versionKey, defaultVersion)
+    project.brellaModule(module, versionKey, defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaModule(module: String, defaultVersion: String? = null) =
-    brellaModule("kornea-$module", "kornea-$module", defaultVersion)
+    project.korneaModule(module, defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaAnnotationsModule(defaultVersion: String? = null) =
-    korneaModule("annotations", defaultVersion = defaultVersion)
+    project.korneaAnnotationsModule(defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaApolloModule(defaultVersion: String? = null) =
-    korneaModule("apollo", defaultVersion = defaultVersion)
+    project.korneaApolloModule(defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaBaseModule(defaultVersion: String? = null) =
-    korneaModule("base", defaultVersion = defaultVersion)
+    project.korneaBaseModule(defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaConfigModule(defaultVersion: String? = null) =
-    korneaModule("config", defaultVersion = defaultVersion)
+    project.korneaConfigModule(defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaErrorsModule(defaultVersion: String? = null) =
-    korneaModule("errors", defaultVersion = defaultVersion)
+    project.korneaErrorsModule(defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaImgModule(defaultVersion: String? = null) =
-    korneaModule("img", defaultVersion = defaultVersion)
+    project.korneaImgModule(defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaIOModule(defaultVersion: String? = null) =
-    korneaModule("io", defaultVersion = defaultVersion)
+    project.korneaIOModule(defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaModellingModule(defaultVersion: String? = null) =
-    korneaModule("modelling", defaultVersion = defaultVersion)
+    project.korneaModellingModule(defaultVersion)
 
 public inline fun KotlinDependencyHandler.korneaToolkitModule(defaultVersion: String? = null) =
-    korneaModule("toolkit", defaultVersion = defaultVersion)
+    project.korneaToolkitModule(defaultVersion)
