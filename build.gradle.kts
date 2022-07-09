@@ -7,7 +7,7 @@ plugins {
     kotlin("jvm") version "1.5.31"
     id("org.jetbrains.dokka") version "1.5.31"
     id("com.gradle.plugin-publish") version "1.0.0-rc-2"
-    id("dev.brella.kornea") version "1.3.0"
+//    id("dev.brella.kornea") version "1.3.0"
     `kotlin-dsl`
 }
 
