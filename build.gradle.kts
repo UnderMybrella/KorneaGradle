@@ -1,3 +1,4 @@
+import dev.brella.kornea.gradle.registerFillReadmeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -6,11 +7,12 @@ plugins {
     kotlin("jvm") version "1.5.31"
     id("org.jetbrains.dokka") version "1.5.31"
     id("com.gradle.plugin-publish") version "1.0.0-rc-2"
+    id("dev.brella.kornea") version "1.3.0"
     `kotlin-dsl`
 }
 
 group = "dev.brella"
-version = "1.2.1"
+version = "1.3.0"
 
 repositories {
     mavenCentral()
@@ -44,7 +46,8 @@ tasks.withType<KotlinCompile> {
 pluginBundle {
     website = "https://github.com/UnderMybrella/kornea-gradle"
     vcsUrl = "https://github.com/UnderMybrella/kornea-gradle"
-    description = "Plugin for assisting with Kotlin development, especially dealing with Multi-Platform and Multi-Module projects."
+    description =
+        "Plugin for assisting with Kotlin development, especially dealing with Multi-Platform and Multi-Module projects."
 
     tags = listOf("kotlin", "kornea")
 }
@@ -57,6 +60,13 @@ gradlePlugin {
             implementationClass = "dev.brella.kornea.gradle.KorneaPlugin"
         }
     }
+}
+
+registerFillReadmeTask("fillReadme") {
+    inputFile.set(File(rootDir, "README_TEMPLATE.md"))
+    outputFile.set(File(rootDir, "README.md"))
+
+    version("%VERSION%")
 }
 
 tasks.named<Jar>("javadocJar") {

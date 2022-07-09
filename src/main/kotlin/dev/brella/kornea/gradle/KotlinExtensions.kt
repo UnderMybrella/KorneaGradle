@@ -1,10 +1,13 @@
 package dev.brella.kornea.gradle
 
+import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
+import org.gradle.api.tasks.SourceSet
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
@@ -22,8 +25,20 @@ public inline fun KotlinDependencyHandler.projectFrom(parent: String, module: St
     project.dependencies.projectFrom(parent, module)
 
 inline fun Project.defineSourceSet(newName: String, dependsOn: List<String>, noinline includedIn: (String) -> Boolean) =
-    project.extensions.getByType<KotlinMultiplatformExtension>()
+    extensions.getByType<KotlinMultiplatformExtension>()
         .defineSourceSet(newName, dependsOn, includedIn)
+
+public fun Project.kotlinSourceSet(sourceSet: SourceSet) =
+    kotlinSourceSet(sourceSet.name)
+
+public fun Project.kotlinSourceSet(provider: NamedDomainObjectProvider<SourceSet>) =
+    kotlinSourceSet(provider.name)
+
+public fun Project.kotlinSourceSet(name: String) =
+    extensions.getByType<KotlinProjectExtension>()
+        .sourceSets
+        .getByName(name)
+        .kotlin
 
 fun KotlinMultiplatformExtension.defineSourceSet(
     newName: String,
