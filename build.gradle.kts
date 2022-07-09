@@ -1,4 +1,4 @@
-import dev.brella.kornea.gradle.registerFillReadmeTask
+//import dev.brella.kornea.gradle.registerFillReadmeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -62,12 +62,12 @@ gradlePlugin {
     }
 }
 
-registerFillReadmeTask("fillReadme") {
-    inputFile.set(File(rootDir, "README_TEMPLATE.md"))
-    outputFile.set(File(rootDir, "README.md"))
-
-    version("%VERSION%")
-}
+//registerFillReadmeTask("fillReadme") {
+//    inputFile.set(File(rootDir, "README_TEMPLATE.md"))
+//    outputFile.set(File(rootDir, "README.md"))
+//
+//    version("%VERSION%")
+//}
 
 tasks.named<Jar>("javadocJar") {
     from(tasks.named("dokkaJavadoc"))
