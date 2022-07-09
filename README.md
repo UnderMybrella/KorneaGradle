@@ -94,7 +94,9 @@ This allows, in multi-module projects, a higher level of dependency coordination
 ### Build Constants
 
 ```kotlin
-val constants = buildConstants(sourceSet = sourceSets.main.get().java) {
+val buildConstants = registerBuildConstantsTask("buildConstants") {
+    setOutputInSourceSet(kotlinSourceSet(sourceSets.main))
+
     gitCommitShortHash("GIT_COMMIT_SHORT_HASH")
     gitCommitHash("GIT_COMMIT_LONG_HASH")
     gitBranch("GIT_BRANCH")
@@ -118,7 +120,9 @@ val constants = buildConstants(sourceSet = sourceSets.main.get().java) {
     userName("USERNAME")
 }
 
-tasks.assemble {
-    dependsOn(constants)
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+    dependsOn(buildConstants)
 }
 ```

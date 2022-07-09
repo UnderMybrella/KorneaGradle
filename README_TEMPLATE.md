@@ -90,3 +90,39 @@ dependencies {
 
 Version information will be checked locally, then if it does not exist the root project will be queried. 
 This allows, in multi-module projects, a higher level of dependency coordination.
+
+### Build Constants
+
+```kotlin
+val buildConstants = registerBuildConstantsTask("buildConstants") {
+    setOutputInSourceSet(kotlinSourceSet(sourceSets.main))
+
+    gitCommitShortHash("GIT_COMMIT_SHORT_HASH")
+    gitCommitHash("GIT_COMMIT_LONG_HASH")
+    gitBranch("GIT_BRANCH")
+    gitCommitMessage("GIT_COMMIT_MESSAGE")
+    gradleVersion("GRADLE_VERSION")
+    gradleGroup("GRADLE_GROUP")
+    gradleName("GRADLE_NAME")
+    gradleDisplayName("GRADLE_DISPLAY_NAME")
+    gradleDescription("GRADLE_DESCRIPTION")
+    buildTimeEpoch("BUILD_TIME_EPOCH")
+    buildTimeUtcEpoch("BUILD_TIME_UTC_EPOCH")
+    hostname("HOSTNAME")
+    jvmVersion("JVM_VERSION")
+    jvmDate("JVM_DATE")
+    jvmVendor("JVM_VENDOR")
+    jvmClassVersion("JVM_CLASS_VERSION")
+    jvmCompiler("JVM_COMPILER")
+    osName("OS_NAME")
+    osArch("OS_ARCH")
+    osVersion("OS_VERSION")
+    userName("USERNAME")
+}
+
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+    dependsOn(buildConstants)
+}
+```
