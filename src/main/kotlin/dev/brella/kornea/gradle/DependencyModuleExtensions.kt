@@ -22,7 +22,20 @@ public inline fun Project.kotlinxSerialisationModules(block: @KorneaDsl KotlinxS
 public inline fun Project.kotlinxCoroutinesModules(block: @KorneaDsl KotlinxCoroutinesModuleDependencies.() -> Unit) =
     KotlinxCoroutinesModuleDependencies(this).block()
 
-public abstract class GroupedModuleDependencies(val project: Project, group: String, baseModule: String?, val moduleName: String) {
+@KorneaDsl
+public inline fun Project.customModules(group: String, moduleName: String, block: @KorneaDsl CustomModuleDependencies.() -> Unit) =
+    CustomModuleDependencies(this, group, null, moduleName).block()
+
+@KorneaDsl
+public inline fun Project.customModules(group: String, baseModule: String?, moduleName: String, block: @KorneaDsl CustomModuleDependencies.() -> Unit) =
+    CustomModuleDependencies(this, group, baseModule, moduleName).block()
+
+public abstract class GroupedModuleDependencies(
+    val project: Project,
+    group: String,
+    baseModule: String?,
+    val moduleName: String,
+) {
     public val baseSpec: String by lazy {
         buildString {
             append(group)
@@ -35,67 +48,73 @@ public abstract class GroupedModuleDependencies(val project: Project, group: Str
         project.versioned("${baseSpec}${module}", moduleName, defaultVersion)
 }
 
-public class KtorModuleDependencies(project: Project): GroupedModuleDependencies(project, "io.ktor", "ktor-", KTOR_MODULE_NAME) {
-    public class Client(project: Project): GroupedModuleDependencies(project, "io.ktor", "ktor-client", KTOR_MODULE_NAME) {
+public class CustomModuleDependencies(project: Project, group: String, baseModule: String?, moduleName: String) :
+    GroupedModuleDependencies(project, group, baseModule, moduleName)
+
+public class KtorModuleDependencies(project: Project) :
+    GroupedModuleDependencies(project, "io.ktor", "ktor-", KTOR_MODULE_NAME) {
+    public class Client(project: Project) :
+        GroupedModuleDependencies(project, "io.ktor", "ktor-client-", KTOR_MODULE_NAME) {
         public inline fun android(defaultVersion: String? = null) =
             of("android", defaultVersion)
-        
+
         public inline fun apache(defaultVersion: String? = null) =
             of("apache", defaultVersion)
-        
+
         public inline fun cio(defaultVersion: String? = null) =
             of("cio", defaultVersion)
-        
+
         public inline fun core(defaultVersion: String? = null) =
             of("core", defaultVersion)
-        
+
         public inline fun curl(defaultVersion: String? = null) =
             of("curl", defaultVersion)
-        
+
         public inline fun darwin(defaultVersion: String? = null) =
             of("darwin", defaultVersion)
-        
+
         public inline fun java(defaultVersion: String? = null) =
             of("java", defaultVersion)
-        
+
         public inline fun jetty(defaultVersion: String? = null) =
             of("jetty", defaultVersion)
-        
+
         public inline fun mock(defaultVersion: String? = null) =
             of("mock", defaultVersion)
-        
+
         public inline fun okhttp(defaultVersion: String? = null) =
             of("okhttp", defaultVersion)
-        
+
         public inline fun auth(defaultVersion: String? = null) =
             of("auth", defaultVersion)
-        
+
         public inline fun contentNegotiation(defaultVersion: String? = null) =
             of("content-negotiation", defaultVersion)
-        
+
         public inline fun encoding(defaultVersion: String? = null) =
             of("encoding", defaultVersion)
-        
+
         public inline fun json(defaultVersion: String? = null) =
             of("json", defaultVersion)
-        
+
         public inline fun gson(defaultVersion: String? = null) =
             of("gson", defaultVersion)
-        
+
         public inline fun jackson(defaultVersion: String? = null) =
             of("jackson", defaultVersion)
-        
+
         public inline fun serialisation(defaultVersion: String? = null) =
             of("serialization", defaultVersion)
-        
+
         public inline fun logging(defaultVersion: String? = null) =
             of("logging", defaultVersion)
-        
+
         public inline fun resources(defaultVersion: String? = null) =
             of("resources", defaultVersion)
     }
 
-    public class Server(project: Project): GroupedModuleDependencies(project, "io.ktor", "ktor-server", KTOR_MODULE_NAME) {
+    public class Server(project: Project) :
+        GroupedModuleDependencies(project, "io.ktor", "ktor-server-", KTOR_MODULE_NAME) {
         public inline fun cio(defaultVersion: String? = null) =
             of("cio", defaultVersion)
 
@@ -283,7 +302,12 @@ public class KtorModuleDependencies(project: Project): GroupedModuleDependencies
         of("utils", defaultVersion)
 }
 
-public class KotlinxSerialisationModuleDependencies(project: Project): GroupedModuleDependencies(project, "org.jetbrains.kotlinx", "kotlinx-serialization-", KOTLINX_SERIALISATION_MODULE_NAME) {
+public class KotlinxSerialisationModuleDependencies(project: Project) : GroupedModuleDependencies(
+    project,
+    "org.jetbrains.kotlinx",
+    "kotlinx-serialization-",
+    KOTLINX_SERIALISATION_MODULE_NAME
+) {
     public inline fun core(defaultVersion: String? = null) =
         of("core", defaultVersion)
 
@@ -303,7 +327,8 @@ public class KotlinxSerialisationModuleDependencies(project: Project): GroupedMo
         of("protobuf", defaultVersion)
 }
 
-public class KotlinxCoroutinesModuleDependencies(project: Project): GroupedModuleDependencies(project, "org.jetbrains.kotlinx", "kotlinx-coroutines-", KOTLINX_COROUTINES_MODULE_NAME) {
+public class KotlinxCoroutinesModuleDependencies(project: Project) :
+    GroupedModuleDependencies(project, "org.jetbrains.kotlinx", "kotlinx-coroutines-", KOTLINX_COROUTINES_MODULE_NAME) {
     public inline fun core(defaultVersion: String? = null) =
         of("core", defaultVersion)
 
