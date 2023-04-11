@@ -1,14 +1,10 @@
 package dev.brella.kornea.gradle
 
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
-import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.api.plugins.ExtraPropertiesExtension
-import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.extra
-import org.gradle.kotlin.dsl.project
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 
 public const val KTOR_MODULE_NAME: String = "ktor"

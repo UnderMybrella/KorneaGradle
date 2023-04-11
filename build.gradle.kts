@@ -4,81 +4,46 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 //    id("org.gradle.kotlin.kotlin-dsl") version "2.3.3"
 
-    kotlin("jvm") version "1.5.31"
-    id("org.jetbrains.dokka") version "1.5.31"
-    id("com.gradle.plugin-publish") version "1.0.0-rc-2"
+    kotlin("jvm") version "1.5.31" apply false
+    id("org.jetbrains.dokka") version "1.5.31" apply false
+    id("com.gradle.plugin-publish") version "1.0.0-rc-2" apply false
     id("dev.brella.kornea") version "1.3.0"
-    `kotlin-dsl`
+    `kotlin-dsl` apply false
 }
 
-group = "dev.brella"
-version = "1.4.1"
+subprojects {
+    apply(plugin = "maven-publish")
 
-repositories {
-    mavenCentral()
-    gradlePluginPortal()
-    mavenLocal()
-}
+    group = "dev.brella"
 
-dependencies {
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21")
-    dokkaHtmlPlugin("org.jetbrains.dokka:javadoc-plugin:1.6.21")
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-//tasks.kotlinSourcesJar {}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "1.8"
-//        freeCompilerArgs += listOf("-Xcontext-receivers")
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        mavenLocal()
     }
-}
 
-pluginBundle {
-    website = "https://github.com/UnderMybrella/kornea-gradle"
-    vcsUrl = "https://github.com/UnderMybrella/kornea-gradle"
-    description =
-        "Plugin for assisting with Kotlin development, especially dealing with Multi-Platform and Multi-Module projects."
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "11"
+//        freeCompilerArgs += listOf("-Xcontext-receivers")
+        }
+    }
 
-    tags = listOf("kotlin", "kornea")
-}
+    configure<PublishingExtension> {
+        repositories {
+            maven(url = "${rootProject.buildDir}/repo")
+        }
 
-gradlePlugin {
-    plugins {
-        create("kornea-gradle") {
-            id = "dev.brella.kornea"
-            displayName = "Kornea-Gradle"
-            implementationClass = "dev.brella.kornea.gradle.KorneaPlugin"
+        publications {
+            create<MavenPublication>("pluginMaven")
         }
     }
 }
 
 registerFillReadmeTask("fillReadme") {
-    inputFile.set(File(rootDir, "README_TEMPLATE.md"))
-    outputFile.set(File(rootDir, "README.md"))
+    inputFile.set(File(projectDir, "README_TEMPLATE.md"))
+    outputFile.set(File(projectDir, "README.md"))
 
-    version("%VERSION%")
-}
-
-tasks.named<Jar>("javadocJar") {
-    from(tasks.named("dokkaJavadoc"))
-}
-
-configure<PublishingExtension> {
-    repositories {
-        maven(url = "${rootProject.buildDir}/repo")
-    }
-
-    publications {
-        create<MavenPublication>("pluginMaven")
-    }
+    addReplacement("%PROJECT_VERSION%") { project(":KorneaGradleProject").version.toString() }
+    addReplacement("%SETTINGS_VERSION%") { project(":KorneaGradleSettings").version.toString() }
 }

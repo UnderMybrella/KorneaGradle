@@ -5,4 +5,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "KorneaGradle"
+include(":project", ":settings")
+
+project(":project").name = "KorneaGradleProject"
+project(":settings").name = "KorneaGradleSettings"

@@ -3,7 +3,6 @@ package dev.brella.kornea.gradle
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.tasks.SourceSet
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
