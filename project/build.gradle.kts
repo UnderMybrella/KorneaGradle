@@ -1,6 +1,8 @@
 import dev.brella.kornea.gradle.registerFillReadmeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val enableDokka = project.property("enableDokka").toString().toBoolean()
+
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka")
@@ -9,16 +11,25 @@ plugins {
     `kotlin-dsl`
 }
 
-version = "2.0.1"
+version = "2.1.0"
 
-java {
-    withSourcesJar()
-    withJavadocJar()
+if (enableDokka) {
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "11"
+//        freeCompilerArgs += listOf("-Xcontext-receivers")
+    }
 }
 
 dependencies {
     compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21")
-    dokkaHtmlPlugin("org.jetbrains.dokka:javadoc-plugin:1.6.21")
+    if (enableDokka) dokkaHtmlPlugin("org.jetbrains.dokka:javadoc-plugin:1.6.21")
 }
 
 tasks.test {
@@ -51,6 +62,8 @@ registerFillReadmeTask("fillReadme") {
     version("%VERSION%")
 }
 
-tasks.named<Jar>("javadocJar") {
-    from(tasks.named("dokkaJavadoc"))
+if (enableDokka) {
+    tasks.named<Jar>("javadocJar") {
+        from(tasks.named("dokkaJavadoc"))
+    }
 }

@@ -7,7 +7,7 @@ plugins {
     kotlin("jvm") version "1.5.31" apply false
     id("org.jetbrains.dokka") version "1.5.31" apply false
     id("com.gradle.plugin-publish") version "1.0.0-rc-2" apply false
-    id("dev.brella.kornea") version "1.3.0"
+    id("dev.brella.kornea") version "2.0.1"
     `kotlin-dsl` apply false
 }
 
@@ -20,13 +20,6 @@ subprojects {
         mavenCentral()
         gradlePluginPortal()
         mavenLocal()
-    }
-
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "11"
-//        freeCompilerArgs += listOf("-Xcontext-receivers")
-        }
     }
 
     configure<PublishingExtension> {
