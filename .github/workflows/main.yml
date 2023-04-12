@@ -24,4 +24,4 @@ jobs:
         with:
            wrapper-directory: gradle/wrapper
            gradle-executable: gradlew
-           arguments: publishPlugins -Pgradle.publish.key=${{ secrets.GRADLE_PUBLISH_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PUBLISH_SECRET }}
+           arguments: publishPlugins --stacktrace --debug -Pgradle.publish.key=${{ secrets.GRADLE_PUBLISH_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PUBLISH_SECRET }}

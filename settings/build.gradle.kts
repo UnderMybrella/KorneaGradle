@@ -9,7 +9,7 @@ plugins {
     `kotlin-dsl`
 }
 
-version = "1.0.0"
+version = "1.0.1"
 
 java {
     withSourcesJar()
@@ -39,7 +39,7 @@ gradlePlugin {
         create("kornea-gradle") {
             id = "dev.brella.kornea.settings"
             displayName = "Kornea-Gradle Settings"
-            implementationClass = "dev.brella.kornea.gradle.settings.KorneaPlugin"
+            implementationClass = "dev.brella.kornea.gradle.settings.KorneaSettingsPlugin"
         }
     }
 }
